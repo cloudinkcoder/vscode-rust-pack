@@ -1,0 +1,68 @@
+name: Publish Extension
+
+on:
+  # when push the release tag (like v1.0.0)
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      publish_target:
+        description: "Select the target to publish"
+        required: true
+        default: "both"
+        type: choice
+        options:
+          - vscode
+          - ovsx
+          - both
+
+permissions:
+  contents: read
+
+jobs:
+  publish-VSCode:
+    if: contains(github.event.inputs.publish_target, 'vscode')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: "npm"
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Publish to VSCode Marketplace
+        if: success()
+        env:
+          VSCE_PAT: ${{ secrets.AZURE_TOKEN }}
+        run: |
+          npx @vscode/vsce publish
+
+  publish-OVSX:
+    if: contains(github.event.inputs.publish_target, 'ovsx')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: "npm"
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Publish to Open VSX Registry
+        if: success()
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_TOKEN }}
+        run: |
+          npx ovsx publish
