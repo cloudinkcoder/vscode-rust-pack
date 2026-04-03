@@ -4,6 +4,10 @@ VSCode Extension Pack for Rust development
 
 ## Included Extensions
 
-- Rust LSP: [rust-analyzer]() (official)
-- []()
-- Rust config files: [TOML Support]()
+- Rust LSP: [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+- Dependency Management Tool: [Dependi](https://marketplace.visualstudio.com/items?itemName=fill-labs.dependi)
+- Rust config files: [TOML Support](https://marketplace.visualstudio.com/items?itemName=tamasfe.even-better-toml)
+
+## License
+
+MIT
