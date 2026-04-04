@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "package.json"
+      - "package-lock.json"
   workflow_dispatch:
     inputs:
       publish_target:
@@ -23,9 +24,9 @@ permissions:
   contents: write
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  release:
     if: contains(github.event.inputs.publish_target, 'release') || contains(github.event.inputs.publish_target, 'both') || github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -38,7 +39,6 @@ jobs:
         run: npm ci
       - name: Build Extension
         run: |
-          npm run pre-build
           npm run build:local
       - name: Get Package Version
         id: get_version
@@ -52,7 +52,7 @@ jobs:
         with:
           name: Release ${{ steps.get_version.outputs.VERSION_OUTPUT }}
           files: |
-            vscode-rust-pack.vsix
+            vscode-rust-pack-*.vsix
           body_path: ${{ github.workspace }}/CHANGELOG.md
           draft: false
           prerelease: false

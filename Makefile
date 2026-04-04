@@ -6,7 +6,7 @@ all: build
 test: build clean
 
 build:
-	npm run pre-build
+	mkdir -p .publish
 	npm run build
 
 clean:
