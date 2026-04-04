@@ -3,12 +3,12 @@
   "displayName": "VSCode Rust Extension Pack",
   "description": "VSCode Extension Pack for Rust",
   "license": "MIT",
-  "version": "0.2.0",
+  "version": "0.2.15",
   "preview": false,
   "private": true,
   "publisher": "aaron-chan",
   "engines": {
-    "vscode": "^1.100.0"
+    "vscode": "^1.86.0"
   },
   "author": {
     "name": "Aaron Chan",
@@ -37,9 +37,9 @@
     "compile": "tsc -p ./",
     "pre-build": "mkdir -p .publish",
     "build": "vsce package -o .publish/$npm_package_name-$npm_package_version.vsix",
+    "build:local": "vsce package -o $npm_package_name-$npm_package_version.vsix",
     "publish": "vsce publish --packagePath .publish/$npm_package_name-$npm_package_version.vsix",
-    "vsce:login": "vsce login aaron-chan",
-    "publish:vsix": "vsce publish --packagePath .publish/$npm_package_name-$npm_package_version.vsix"
+    "vsce:login": "vsce login aaron-chan"
   },
   "extensionPack": [
     "rust-lang.rust-analyzer",
@@ -47,7 +47,7 @@
     "tamasfe.even-better-toml"
   ],
   "devDependencies": {
-    "@types/vscode": "^1.100.0",
+    "@types/vscode": "^1.86.0",
     "@types/node": "^25.5.2",
     "@vscode/vsce": "^3.7.1",
     "typescript": "^6.0.2"

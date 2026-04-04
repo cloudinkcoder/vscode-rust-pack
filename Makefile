@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := all
-.PHONY: all test build clean publish
+.PHONY: all test build clean publish update
 
 all: build
 
@@ -15,3 +15,5 @@ clean:
 publish:
 	npm run publish
 
+update:
+	npm version --no-git-tag-version patch

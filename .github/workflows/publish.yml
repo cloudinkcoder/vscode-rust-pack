@@ -1,10 +1,11 @@
 name: Publish Extension
 
 on:
-  # when push the release tag (like v1.0.0)
   push:
-    tags:
-      - "v*"
+    branches:
+      - main
+    paths:
+      - "package.json"
   workflow_dispatch:
     inputs:
       publish_target:
@@ -15,14 +16,50 @@ on:
         options:
           - vscode
           - ovsx
+          - release
           - both
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: contains(github.event.inputs.publish_target, 'release') || contains(github.event.inputs.publish_target, 'both') || github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: "npm"
+      - name: Install Dependencies
+        run: npm ci
+      - name: Build Extension
+        run: |
+          npm run pre-build
+          npm run build:local
+      - name: Get Package Version
+        id: get_version
+        run: |
+          VERSION=$(npm pkg get version | tr -d '"')
+          echo "VERSION_OUTPUT=$VERSION" >> $GITHUB_OUTPUT
+      - name: Push Release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: Release ${{ steps.get_version.outputs.VERSION_OUTPUT }}
+          files: |
+            vscode-rust-pack.vsix
+          body_path: ${{ github.workspace }}/CHANGELOG.md
+          draft: false
+          prerelease: false
+          tag_name: v${{ steps.get_version.outputs.VERSION_OUTPUT }}
+
   publish-VSCode:
-    if: contains(github.event.inputs.publish_target, 'vscode')
+    if: contains(github.event.inputs.publish_target, 'vscode') || contains(github.event.inputs.publish_target, 'both') || github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code
@@ -42,7 +79,7 @@ jobs:
           npx @vscode/vsce publish
 
   publish-OVSX:
-    if: contains(github.event.inputs.publish_target, 'ovsx')
+    if: contains(github.event.inputs.publish_target, 'ovsx') || contains(github.event.inputs.publish_target, 'both') || github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code
