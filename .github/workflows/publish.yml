@@ -1,10 +1,11 @@
 name: Publish Extension
 
 on:
-  # when push the release tag (like v1.0.0)
   push:
-    tags:
-      - "v*"
+    branches:
+      - main
+    paths:
+      - "package.json"
   workflow_dispatch:
     inputs:
       publish_target:
@@ -22,7 +23,7 @@ permissions:
 
 jobs:
   publish-VSCode:
-    if: contains(github.event.inputs.publish_target, 'vscode')
+    if: contains(github.event.inputs.publish_target, 'vscode') || contains(github.event.inputs.publish_target, 'both') || github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code
@@ -42,7 +43,7 @@ jobs:
           npx @vscode/vsce publish
 
   publish-OVSX:
-    if: contains(github.event.inputs.publish_target, 'ovsx')
+    if: contains(github.event.inputs.publish_target, 'ovsx') || contains(github.event.inputs.publish_target, 'both') || github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code
