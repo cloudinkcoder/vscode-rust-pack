@@ -8,6 +8,11 @@ VSCode Extension Pack for Rust development
 - Dependency Management Tool: [Dependi](https://marketplace.visualstudio.com/items?itemName=fill-labs.dependi)
 - Rust config files: [TOML Support](https://marketplace.visualstudio.com/items?itemName=tamasfe.even-better-toml)
 
+## Push
+
+- VSCode
+- Open VSX Registry
+
 ## License
 
 MIT
