@@ -7,7 +7,7 @@ test: build clean
 
 build:
 	mkdir -p .publish
-	npm run build
+	npm run package
 
 clean:
 	rm -rf .publish

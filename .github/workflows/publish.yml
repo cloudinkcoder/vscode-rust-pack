@@ -39,7 +39,7 @@ jobs:
           cache: "npm"
       - run: npm ci
       - run: |
-          npm run build:local
+          npx @vscode/vsce package
       - name: Get Package Version
         id: get_version
         run: |
