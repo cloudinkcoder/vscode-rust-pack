@@ -5,9 +5,9 @@ on:
   pull_request:
     branches:
       - "!main"
-  push:
-    branches:
-      - main
+  schedule:
+    # 北京时间每周一早上10点执行
+    - cron: "0 2 * * 1"
 
 permissions:
   contents: write
