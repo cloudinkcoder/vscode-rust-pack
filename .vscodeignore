@@ -1,7 +1,7 @@
 .github/**
 .publish/**
 .vscode/**
-.vscode-test/**
 .gitattributes
 .gitignore
 Makefile
+docs/**
