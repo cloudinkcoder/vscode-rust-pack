@@ -45,7 +45,7 @@
     "tamasfe.even-better-toml"
   ],
   "devDependencies": {
-    "@vscode/vsce": "^3.9.0",
+    "@vscode/vsce": "^3.9.1",
     "typescript": "^6.0.3"
   }
 }
