@@ -47,7 +47,7 @@
     "vadimcn.vscode-lldb"
   ],
   "devDependencies": {
-    "@vscode/vsce": "^3.9.1",
+    "@vscode/vsce": "^3.9.2",
     "typescript": "^6.0.3"
   }
 }
