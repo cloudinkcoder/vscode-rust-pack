@@ -32,7 +32,7 @@ jobs:
           VERSION=$(npm pkg get version | tr -d '"')
           echo "VERSION_OUTPUT=$VERSION" >> $GITHUB_OUTPUT
       - name: Push Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
