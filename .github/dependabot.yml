@@ -11,12 +11,12 @@ updates:
     directory: "/"
     # Check the npm registry for updates every day (weekdays)
     schedule:
-      interval: daily
+      interval: "daily"
 
-  - package-ecosystem: github-actions
-    directory: /
+  - package-ecosystem: "github-actions"
+    directory: "/"
     schedule:
-      interval: weekly
-      day: monday
+      interval: "weekly"
+      day: "monday"
       time: "09:00"
-      timezone: Asia/Shanghai
+      timezone: "Asia/Shanghai"
