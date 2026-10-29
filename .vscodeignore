@@ -1,0 +1,8 @@
+.git-templates
+.github
+.publish
+.vscode
+docs
+.gitattributes
+.gitignore
+Makefile
