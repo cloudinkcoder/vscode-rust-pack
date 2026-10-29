@@ -13,7 +13,14 @@ updates:
     schedule:
       interval: "daily"
     groups:
-      patterns: "*"
+      npm-dependencies:
+        patterns:
+          - "*"
+        # 仅将非主版本更新聚合, 主版本major单独开PR, 便于审查
+        # major数量较少, 但更需要人工评审
+        update-types:
+          - "minor"
+          - "patch"
 
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -22,3 +29,9 @@ updates:
       day: "monday"
       time: "09:00"
       timezone: "Asia/Shanghai"
+    # 最多同时打开 3 个 PR
+    open-pull-requests-limit: 3
+    groups:
+      github-actions:
+        patterns:
+          - "*"
