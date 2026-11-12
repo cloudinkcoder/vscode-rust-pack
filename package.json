@@ -3,7 +3,7 @@
   "displayName": "VSCode Rust Extension Pack",
   "description": "VSCode Extension Pack for Rust",
   "license": "MIT",
-  "version": "0.3.3",
+  "version": "1.1.0",
   "preview": false,
   "private": true,
   "publisher": "aaron-chan",

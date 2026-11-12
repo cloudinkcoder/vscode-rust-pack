@@ -1,13 +1,12 @@
-name: Release
+name: Release and Publish Extension
 
 on:
   workflow_dispatch:
   pull_request:
-    branches:
-      - "!main"
+    branches: ["!main"]
   schedule:
-    # At 04:00 on Monday (UTC+0)
-    - cron: "0 4 * * 1"
+    # At 14:15 on day-of-month 1 (UTC+0)
+    - cron: "15 14 1 * *"
 
 permissions:
   contents: write
@@ -18,21 +17,26 @@ jobs:
     name: Release to GitHub
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - name: Checkout
+        uses: actions/checkout@v7
+
       - name: Setup Node.js
         uses: actions/setup-node@v7
         with:
           node-version: "lts/*"
           cache: "npm"
+
       - run: npm ci
       - run: |
           npx @vscode/vsce package
+
       - name: Get Package Version
         id: get_version
         run: |
           VERSION=$(npm pkg get version | tr -d '"')
           echo "VERSION_OUTPUT=$VERSION" >> $GITHUB_OUTPUT
       - name: Push Release
+        if: success()
         uses: softprops/action-gh-release@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -42,3 +46,26 @@ jobs:
             vscode-rust-pack-*.vsix
           body_path: ${{ github.workspace }}/CHANGELOG.md
           tag_name: v${{ steps.get_version.outputs.VERSION_OUTPUT }}
+
+  publish:
+    needs: release
+    if: needs.release.result == 'success'
+    name: Publish to VSCode Marketplace
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "lts/*"
+          cache: "npm"
+
+      - run: npm ci
+      - name: Publish to VSCode Marketplace
+        if: success()
+        env:
+          VSCE_PAT: ${{ secrets.AZURE_TOKEN }}
+        run: |
+          npx @vscode/vsce publish

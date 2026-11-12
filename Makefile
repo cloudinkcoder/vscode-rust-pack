@@ -18,4 +18,4 @@ publish:
 	npm run publish
 
 update:
-	npm version --no-git-tag-version patch
+	npm version --no-git-tag-version minor
