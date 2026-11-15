@@ -3,8 +3,8 @@ name: Auto Clean
 on:
   workflow_dispatch:
   schedule:
-    # 北京时间每周一早上10点执行
-    - cron: "0 2 * * 1"
+    # At 14:15 on day-of-month 1 (UTC+0)
+    - cron: "15 14 1 * *"
 
 permissions:
   contents: write
