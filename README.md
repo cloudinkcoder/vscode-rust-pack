@@ -1,6 +1,6 @@
 # VSCode Rust Extension Pack
 
-[![Publish Extension](https://github.com/cloudinkcoder/vscode-rust-pack/actions/workflows/publish.yml/badge.svg)](https://github.com/cloudinkcoder/vscode-rust-pack/actions/workflows/publish.yml)
+[![Publish Extension](https://github.com/cloudinkcoder/vscode-rust-pack/actions/workflows/release-and-publish.yml/badge.svg)](https://github.com/cloudinkcoder/vscode-rust-pack/actions/workflows/release-and-publish.yml)
 
 VSCode Extension Pack for Rust development
 
