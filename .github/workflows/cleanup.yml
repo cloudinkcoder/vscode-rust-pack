@@ -1,0 +1,24 @@
+name: Cleanup old releases and tags
+
+on:
+  workflow_dispatch:
+    inputs:
+      keep:
+        description: "保留最近多少个release (默认3个)"
+        required: false
+        default: "3"
+      dry-run:
+        description: "只打印将要删除的内容, 不实际删除"
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    uses: cloudinkcoder/tools/.github/workflows/cleanup-releases-and-tags.yml@main
+    with:
+      keep: ${{ github.event.inputs.keep || '3' }}
+      dry-run: ${{ github.event.inputs.dry-run == 'true' }}
