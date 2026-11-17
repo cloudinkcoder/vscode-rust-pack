@@ -18,7 +18,7 @@ permissions:
 
 jobs:
   cleanup:
-    uses: cloudinkcoder/tools/.github/workflows/cleanup-releases-and-tags.yml@main
+    uses: ac2learn/workflows/.github/workflows/cleanup-releases-and-tags.yml@main
     with:
       keep: ${{ github.event.inputs.keep || '3' }}
       dry-run: ${{ github.event.inputs.dry-run == 'true' }}
